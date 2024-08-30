@@ -26,3 +26,12 @@ python main.py dQw4w9WgXcQ
 ```
 
 There are some args, just use `python main.py -h` to check it out.
+
+## FFMPEG
+
+Install ffmpeg. On Windows just throw in the executable in the same directory. On Linux.. Find out yourself.
+
+Then you can pass the output file like this:
+```bash
+python main.py dQw4w9WgXcQ --ffmpeg output.mp3
+```

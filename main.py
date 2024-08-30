@@ -2,6 +2,7 @@ import requests
 import json
 import os
 import argparse
+import ffmpeg
 
 
 def parse_args() -> argparse.Namespace:
@@ -9,6 +10,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("videoId", help="Video ID")
     parser.add_argument("-t", "--timeout", help="Timeout before switching to next instance.", default=3)
     parser.add_argument("-s", "--successFile", help="Path to success rate file. Saves preferred instances.", default="successrate.json")
+    parser.add_argument("-f", "--ffmpeg", help="Specify output file, will be converted with ffmpeg")
     return parser.parse_args()
 
 
@@ -65,5 +67,8 @@ def download(video_id, timeout=3, success_file="successrate.json"):
 
 if __name__ == "__main__":
     args = parse_args()
-    print(download(args.videoId))
+    if args.ffmpeg:
+        ffmpeg.input(download(args.videoId)).output(args.ffmpeg).overwrite_output().run()
+    else:
+        print(download(args.videoId))
     
