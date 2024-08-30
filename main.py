@@ -44,6 +44,9 @@ def download(video_id, timeout=3, success_file="successrate.json"):
         except (requests.exceptions.ReadTimeout, requests.exceptions.ConnectionError, requests.exceptions.JSONDecodeError):
             change_rate(success_rates, instance["uri"], False)
             continue
+        if "adaptiveFormats" not in vid_info:
+            change_rate(success_rates, instance["uri"], False)
+            continue
         success = False
         for _format in sorted(vid_info["adaptiveFormats"], key=lambda a: a.get("bitrate", 0)):
             if "container" not in _format or not _format["type"].startswith("audio/"):
