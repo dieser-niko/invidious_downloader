@@ -44,7 +44,7 @@ def download(video_id, timeout=3, success_file="successrate.json"):
             continue
         success = False
         for _format in sorted(vid_info["adaptiveFormats"], key=lambda a: a.get("bitrate", 0)):
-            if "container" not in _format:
+            if "container" not in _format or not _format["type"].startswith("audio/"):
                 continue
             response = session.get(_format["url"])
             if response.status_code != 200:
